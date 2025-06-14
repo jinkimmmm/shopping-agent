@@ -1,0 +1,75 @@
+# Shopping Agent API 테스트 명령어 모음
+
+## 기본 API 서버 확인
+curl http://localhost:8001/health
+
+## API 문서 확인
+브라우저에서: http://localhost:8001/api/docs
+
+## 1. 기본 쇼핑 요청 (노트북 검색)
+curl -X POST "http://localhost:8001/api/v1/requests" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "Find me the best laptop under $1000",
+       "context": {"budget": 1000, "category": "electronics"},
+       "user_id": "test_user",
+       "session_id": "test_session"
+     }'
+
+## 2. 한국어 쇼핑 요청 (스마트폰 검색)
+curl -X POST "http://localhost:8001/api/v1/requests" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "최신 아이폰 가격 비교해줘",
+       "context": {"category": "mobile", "brand": "apple"},
+       "user_id": "korean_user"
+     }'
+
+## 3. 간단한 요청 (최소 필드만)
+curl -X POST "http://localhost:8001/api/v1/requests" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "무선 이어폰 추천"
+     }'
+
+## 4. 게이밍 장비 검색
+curl -X POST "http://localhost:8001/api/v1/requests" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "Find me gaming headphones under $200",
+       "context": {"budget": 200, "category": "gaming", "use_case": "fps_gaming"},
+       "user_id": "gamer_user"
+     }'
+
+## 5. 요청 상태 확인 (request_id는 위 요청의 응답에서 받은 값으로 교체)
+curl -X GET "http://localhost:8001/api/v1/requests/{request_id}/status" \
+     -H "Accept: application/json"
+
+## 6. 시스템 상태 확인
+curl -X GET "http://localhost:8001/api/v1/system/status" \
+     -H "Accept: application/json"
+
+## 7. 요청 히스토리 조회
+curl -X GET "http://localhost:8001/api/v1/history?limit=10" \
+     -H "Accept: application/json"
+
+## 사용 방법:
+# 1. API 서버가 실행 중인지 확인: http://localhost:8001/api/docs
+# 2. 위 명령어 중 하나를 복사해서 터미널에서 실행
+# 3. 응답에서 request_id를 확인하고 상태 확인 명령어에 사용
+
+## 예상 응답 형식:
+# 요청 생성 성공시:
+# {"request_id": "123e4567-e89b-12d3-a456-426614174000"}
+#
+# 상태 확인시:
+# {
+#   "request_id": "123e4567-e89b-12d3-a456-426614174000",
+#   "status": "processing",
+#   "progress": 0.5,
+#   "current_step": "Analyzing products",
+#   "result": null,
+#   "error": null,
+#   "created_at": "2024-01-01T12:00:00Z",
+#   "updated_at": "2024-01-01T12:05:00Z"
+# }

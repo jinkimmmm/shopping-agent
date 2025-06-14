@@ -1,0 +1,45 @@
+# Google ADK 기반 에이전트 시스템 - 개발 의존성
+
+# 프로덕션 의존성 포함
+-r requirements.txt
+
+# 테스트 프레임워크
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-xdist>=3.5.0
+httpx>=0.25.0  # 테스트용 HTTP 클라이언트
+
+# 코드 품질 도구
+black>=23.12.0
+isort>=5.13.0
+flake8>=6.1.0
+mypy>=1.8.0
+pre-commit>=3.6.0
+
+# 문서화
+sphinx>=7.2.0
+sphinx-rtd-theme>=2.0.0
+mkdocs>=1.5.0
+mkdocs-material>=9.5.0
+
+# 개발 도구
+ipython>=8.18.0
+jupyter>=1.0.0
+notebook>=7.0.0
+
+# 성능 프로파일링
+memory-profiler>=0.61.0
+line-profiler>=4.1.0
+
+# 보안 검사
+bandit>=1.7.0
+safety>=2.3.0
+
+# 타입 체킹
+types-requests>=2.31.0
+types-python-dateutil>=2.8.0
+
+# 환경 관리
+python-decouple>=3.8
